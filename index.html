@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basic Calculator</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      
+      .calculator {
+        display: grid;
+        grid-template-columns: repeat(4, 80px);
+        grid-gap: 10px;
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      .display {
+        grid-column: span 4;
+        text-align: right;
+        font-size: 24px;
+        padding: 10px;
+        background-color: #e1e1e1;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      
+      button {
+        font-size: 20px;
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      
+      button:hover {
+        background-color: #f9f9f9;
+      }
+      
+      .equals {
+        grid-column: span 2;
+      }
+      
+      .clear,
+      .equals,
+      .backspace {
+        background-color: #ffcccc;
+        color: #cc0000;
+      }
+      
+      .clear:hover,
+      .equals:hover,
+      .backspace:hover {
+        background-color: #ff9999;
+      }
+      
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+    <button class="clear" onclick="clearDisplay()">C</button>
+    <button onclick="appendNumber(7)">7</button>
+    <button onclick="appendNumber(8)">8</button>
+    <button onclick="appendNumber(9)">9</button>
+    <button onclick="setOperator('+')">+</button>
+    <button onclick="appendNumber(4)">4</button>
+    <button onclick="appendNumber(5)">5</button>
+    <button onclick="appendNumber(6)">6</button>
+    <button onclick="setOperator('-')">-</button>
+    <button onclick="appendNumber(1)">1</button>
+    <button onclick="appendNumber(2)">2</button>
+    <button onclick="appendNumber(3)">3</button>
+    <button onclick="setOperator('*')">*</button>
+    <button onclick="appendNumber(0)">0</button>
+    <button onclick="appendDecimal()">.</button>
+    <button class="equals" onclick="calculate()">=</button>
+    <button onclick="setOperator('/')">/</button>
+    <button class="backspace" onclick="backspace()">&#9003;</button>
+  </div>
+
+  <script>
+    let firstNumber = '';
+let operator = '';
+let secondNumber = '';
+let currentDisplay = '0';
+
+function appendNumber(num) {
+  if (currentDisplay === '0' || currentDisplay === 'Error') {
+    currentDisplay = num.toString();
+  } else {
+    currentDisplay += num.toString();
+  }
+  updateDisplay();
+}
+
+function appendDecimal() {
+  if (!currentDisplay.includes('.')) {
+    currentDisplay += '.';
+    updateDisplay();
+  }
+}
+
+function setOperator(op) {
+  firstNumber = currentDisplay;
+  operator = op;
+  currentDisplay = '0';
+}
+
+function calculate() {
+  if (operator && firstNumber !== '' && currentDisplay !== '') {
+    secondNumber = currentDisplay;
+    currentDisplay = operate(operator, firstNumber, secondNumber).toString();
+    firstNumber = '';
+    operator = '';
+    secondNumber = '';
+    updateDisplay();
+  }
+}
+
+function clearDisplay() {
+  currentDisplay = '0';
+  firstNumber = '';
+  operator = '';
+  secondNumber = '';
+  updateDisplay();
+}
+
+function backspace() {
+  currentDisplay = currentDisplay.slice(0, -1);
+  if (currentDisplay === '') {
+    currentDisplay = '0';
+  }
+  updateDisplay();
+}
+
+function updateDisplay() {
+  const displayElement = document.getElementById('display');
+  displayElement.textContent = currentDisplay;
+}
+
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function divide(a, b) {
+  if (b === 0) {
+    return 'Error';
+  }
+  return a / b;
+}
+
+function operate(operator, a, b) {
+  a = parseFloat(a);
+  b = parseFloat(b);
+
+  switch (operator) {
+    case '+':
+      return add(a, b);
+    case '-':
+      return subtract(a, b);
+    case '*':
+      return multiply(a, b);
+    case '/':
+      return divide(a, b);
+    default:
+      return 'Error';
+  }
+}
+
+  </script>
+</body>
+</html>
