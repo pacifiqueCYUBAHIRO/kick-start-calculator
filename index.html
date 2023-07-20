@@ -8,6 +8,7 @@
     body {
         font-family: Arial, sans-serif;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;
@@ -63,6 +64,23 @@
       .backspace:hover {
         background-color: #ff9999;
       }
+      footer{
+        padding: 20px;
+      }
+      footer p{
+        text-align: center;
+      }
+      footer a{
+              text-decoration: none;
+              color: black;
+              font-weight: bold;
+            }
+      footer a:hover{
+              text-decoration: none;
+              font-weight: bold;
+              color: rgb(14, 110, 27);
+            }
+      
       
   </style>
 </head>
@@ -83,11 +101,15 @@
     <button onclick="appendNumber(3)">3</button>
     <button onclick="setOperator('*')">*</button>
     <button onclick="appendNumber(0)">0</button>
-    <button onclick="appendDecimal()">.</button>
-    <button class="equals" onclick="calculate()">=</button>
+    <button onclick="appendDecimal()">.</button><br>
     <button onclick="setOperator('/')">/</button>
+    <button class="equals" onclick="calculate()">=</button>
     <button class="backspace" onclick="backspace()">&#9003;</button>
   </div>
+
+  <footer>
+    <p>Designed by<a href="https://github.com/pacifiqueCYUBAHIRO/kick-start-calculator"> PacifiqueCYUBAHIRO</a> &copy; 2023</p>
+  </footer>
 
   <script>
     let firstNumber = '';
